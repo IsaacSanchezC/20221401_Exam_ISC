@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ProductModel>
+
+@{
+    ViewData["Title"] = "Product";
+    if (ReferenceEquals(null, TempData["Search"])) {
+        TempData["Search"] = "";
+    }
+}
+
+<h1>Productos Chubby [Re-llenitos de Amor]</h1>
+
+<p>
+    <a asp-action="Create">Nuevo Producto</a>
+</p>
+
+<form asp-action="Index">
+    <div class="input-group md-form form-sm form-2 pl-0" >
+        <input name="filterProduct" class="form-control my-0 py-1 red-border " type="text", placeholder="Buscar" aria-label="Buscar" value="@TempData["Search"].ToString()"/>
+        <div class="input-group-append">
+
+            <span class="input-group-text red-border lighten-3" id="filterText" >
+                <i class="fa fa-search text-grey" aria-hidden="true"></i>
+            </span>
+        </div>
+
+    </div>
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.ActionLink("Actualizar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts{ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+    
+        $(function () {
+            $("#filterText").click(function () { $("Form").submit(); })
+        });
+    </script>
+
+}
